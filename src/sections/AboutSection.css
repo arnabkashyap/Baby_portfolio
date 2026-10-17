@@ -142,11 +142,64 @@
   margin-top: auto;
   padding-top: 0.5rem;
   border-top: 1px dashed var(--border-subtle);
+  word-break: break-word;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) and (min-width: 641px) {
+  .facts-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .facts-cards-grid .fact-card:last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-section {
+    padding: 3rem 0 2rem;
+  }
+  .about-header-group {
+    margin-bottom: 2rem;
+  }
+  .about-heading {
+    font-size: clamp(1.75rem, 5.5vw, 2.4rem);
+  }
+  .about-intro-text {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
   .facts-cards-grid {
     grid-template-columns: 1fr;
     gap: 1.25rem;
+  }
+  .fact-card {
+    padding: 1.4rem 1.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-section {
+    padding: 2.25rem 0 1.5rem;
+  }
+  .about-heading {
+    font-size: 1.55rem;
+  }
+  .trait-badge {
+    font-size: 0.58rem;
+    padding: 0.35rem 0.65rem;
+  }
+  .fact-card {
+    padding: 1.15rem 0.95rem;
+    gap: 0.75rem;
+  }
+  .fact-card-title {
+    font-size: 1.2rem;
+  }
+  .fact-card-desc {
+    font-size: 0.9rem;
+  }
+  .fact-retro-tag {
+    font-size: 0.5rem;
   }
 }

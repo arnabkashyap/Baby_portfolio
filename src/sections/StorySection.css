@@ -177,7 +177,7 @@
 
 .chapter-title {
   font-family: var(--font-display);
-  font-size: 1.65rem;
+  font-size: clamp(1.3rem, 4.5vw, 1.65rem);
   color: var(--text-primary);
   margin: 0;
   line-height: 1.25;
@@ -198,6 +198,8 @@
   margin-top: 0.5rem;
   padding-top: 0.75rem;
   border-top: 1px dashed var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
 .chapter-log-stamp {
@@ -205,6 +207,7 @@
   font-size: 0.55rem;
   color: var(--text-subtle);
   letter-spacing: 0.04em;
+  word-break: break-word;
 }
 
 .chapter-mood-pill {
@@ -214,6 +217,7 @@
   font-family: var(--font-pixel);
   font-size: 0.55rem;
   color: var(--color-moonlight-yellow);
+  white-space: nowrap;
 }
 
 /* Floating Stardust Sparkles on Route */
@@ -228,21 +232,41 @@
   100% { transform: scale(1.2); opacity: 1; }
 }
 
-/* Responsive Stacking & Route Simplification on Mobile */
-@media (max-width: 768px) {
-  .story-chapter-card {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    padding: 1.5rem;
-  }
+/* Responsive Stacking & Route Simplification on Tablet & Mobile */
+@media (max-width: 860px) {
   .story-chapter-card.chapter-right,
   .story-chapter-card.chapter-left {
     margin-left: 0;
     margin-right: 0;
   }
+}
+
+@media (max-width: 768px) {
+  .story-section {
+    padding: 3rem 0 2rem;
+  }
+  .story-header-group {
+    margin-bottom: 2rem;
+  }
+  .story-heading {
+    font-size: clamp(1.75rem, 5.5vw, 2.4rem);
+  }
+  .story-intro-text {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .story-chapters-list {
+    gap: 1.75rem;
+  }
+  .story-chapter-card {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: clamp(1.25rem, 4vw, 1.75rem);
+  }
   .chapter-marker-col {
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
   }
   .chapter-emblem {
@@ -251,5 +275,54 @@
   }
   .story-winding-route-svg {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .chapter-footnote-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .story-section {
+    padding: 2.25rem 0 1.5rem;
+  }
+  .story-heading {
+    font-size: 1.55rem;
+  }
+  .story-chapter-card {
+    padding: 1.15rem 0.95rem;
+    gap: 0.85rem;
+  }
+  .chapter-title {
+    font-size: 1.25rem;
+  }
+  .chapter-narrative-text {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .chapter-number-pill {
+    font-size: 0.5rem;
+    padding: 0.25rem 0.45rem;
+  }
+  .chapter-log-stamp {
+    font-size: 0.48rem;
+  }
+  .chapter-mood-pill {
+    font-size: 0.48rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dream-route-line {
+    animation: none !important;
+  }
+  .story-chapter-card,
+  .chapter-emblem {
+    transition: none !important;
+    transform: none !important;
   }
 }

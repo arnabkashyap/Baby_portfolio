@@ -10,9 +10,10 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-height) + 1.5rem);
+  scroll-padding-top: calc(var(--header-height) + 1.25rem);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 body {
@@ -24,7 +25,15 @@ body {
   background-attachment: fixed;
   line-height: 1.6;
   overflow-x: hidden;
+  position: relative;
+  width: 100%;
   transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Accessibility Focus States */
@@ -36,7 +45,7 @@ body {
 
 /* Consistent Section Anchor Scrolling */
 section[id] {
-  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  scroll-margin-top: calc(var(--header-height) + 1.25rem);
 }
 
 /* Selection */
@@ -51,6 +60,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   line-height: 1.25;
   color: var(--text-primary);
+  word-break: break-word;
 }
 
 p {
@@ -76,7 +86,7 @@ button {
   width: 100%;
   max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 clamp(0.75rem, 3.5vw, 1.5rem);
 }
 
 /* Fonts */
@@ -171,12 +181,14 @@ button {
 .btn-primary-dream {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
   background: linear-gradient(135deg, var(--color-dream-berry), #BA4B77);
   color: var(--color-moon-cream);
   font-family: var(--font-pixel);
   font-size: 0.75rem;
-  padding: 0.85rem 1.6rem;
+  padding: 0.8rem 1.5rem;
+  min-height: 44px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--border-accent);
   box-shadow: 0 4px 16px rgba(163, 64, 104, 0.45);
@@ -195,11 +207,13 @@ button {
 .btn-secondary-dream {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   color: var(--text-accent);
   font-family: var(--font-pixel);
   font-size: 0.7rem;
-  padding: 0.6rem 1rem;
+  padding: 0.65rem 1rem;
+  min-height: 44px;
   border-radius: var(--radius-sm);
   background: transparent;
   border: 1px dashed var(--border-accent);

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Sparkles, Moon, Sun, Volume2, VolumeX } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react'
+import { Sparkles, Moon, Sun, Volume2, VolumeX, Menu, X, ArrowRight } from 'lucide-react'
 import './Header.css'
 
 interface HeaderProps {
@@ -15,11 +15,54 @@ export const Header: React.FC<HeaderProps> = ({
   soundEnabled,
   onToggleSound,
 }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const firstLinkRef = useRef<HTMLAnchorElement>(null)
+
+  // Close menu on Escape key press
+  useEffect(() => {
+    if (!isMenuOpen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isMenuOpen])
+
+  // Focus first link when menu opens
+  useEffect(() => {
+    if (isMenuOpen) {
+      firstLinkRef.current?.focus()
+    }
+  }, [isMenuOpen])
+
+  // Prevent background scrolling when mobile menu is open on small screens
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen])
+
+  const handleLinkClick = () => {
+    setIsMenuOpen(false)
+  }
+
   return (
     <header className="site-header" id="main-header">
       <div className="page-container header-container">
         {/* Brand Logo & Wordmark */}
-        <a href="#hero" className="header-branding" aria-label="PIP.EXE Home">
+        <a href="#hero" className="header-branding" aria-label="PIP.EXE Home" onClick={handleLinkClick}>
           <div className="header-logo-badge" title="PIP.EXE Dream Engine">
             <Sparkles size={14} color="#F5A9C5" />
             <span className="pip-title">PIP.EXE</span>
@@ -31,14 +74,14 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </a>
 
-        {/* Section Anchors */}
+        {/* Desktop Section Anchors */}
         <nav className="header-nav" aria-label="Primary Navigation">
           <a href="#about" className="nav-link">ABOUT</a>
           <a href="#dreams" className="nav-link">DREAMS</a>
           <a href="#story" className="nav-link">STORY</a>
         </nav>
 
-        {/* Controls: Audio Toggle & Theme Toggle */}
+        {/* Controls: Audio Toggle, Theme Toggle & Mobile Hamburger */}
         <div className="header-actions">
           {/* Working Sound Toggle */}
           <button
@@ -54,12 +97,12 @@ export const Header: React.FC<HeaderProps> = ({
           >
             {soundEnabled ? (
               <>
-                <Volume2 size={12} color="#F7E7A6" />
+                <Volume2 size={13} color="#F7E7A6" />
                 <span className="sound-mode-label">SOUND: ON</span>
               </>
             ) : (
               <>
-                <VolumeX size={12} color="#F5A9C5" />
+                <VolumeX size={13} color="#F5A9C5" />
                 <span className="sound-mode-label">MUTED</span>
               </>
             )}
@@ -75,18 +118,98 @@ export const Header: React.FC<HeaderProps> = ({
           >
             {theme === 'night' ? (
               <>
-                <Moon size={12} color="#F7E7A6" />
+                <Moon size={13} color="#F7E7A6" />
                 <span className="theme-mode-label">NIGHT</span>
               </>
             ) : (
               <>
-                <Sun size={12} color="#A34068" />
+                <Sun size={13} color="#A34068" />
                 <span className="theme-mode-label">DAY</span>
               </>
             )}
           </button>
+
+          {/* Mobile Hamburger Toggle Button (visible on <= 680px) */}
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className="mobile-menu-btn"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav-drawer"
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          >
+            {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
       </div>
+
+      {/* Accessible Mobile Navigation Drawer */}
+      {isMenuOpen && (
+        <div
+          className="mobile-drawer-backdrop"
+          onClick={() => setIsMenuOpen(false)}
+          aria-hidden="true"
+        >
+          <div
+            id="mobile-nav-drawer"
+            ref={menuRef}
+            className="mobile-drawer-card"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation Menu"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mobile-drawer-header">
+              <span className="mobile-drawer-tag">✦ NURSERY DIRECTORY</span>
+              <button
+                type="button"
+                className="mobile-drawer-close"
+                onClick={() => setIsMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <nav className="mobile-drawer-nav" aria-label="Mobile Navigation Links">
+              <a
+                ref={firstLinkRef}
+                href="#about"
+                className="mobile-nav-link"
+                onClick={handleLinkClick}
+              >
+                <span>ABOUT PIP</span>
+                <ArrowRight size={14} className="mobile-nav-arrow" />
+              </a>
+
+              <a
+                href="#dreams"
+                className="mobile-nav-link"
+                onClick={handleLinkClick}
+              >
+                <span>DREAM WORKBENCH</span>
+                <ArrowRight size={14} className="mobile-nav-arrow" />
+              </a>
+
+              <a
+                href="#story"
+                className="mobile-nav-link"
+                onClick={handleLinkClick}
+              >
+                <span>CELESTIAL STORY</span>
+                <ArrowRight size={14} className="mobile-nav-arrow" />
+              </a>
+            </nav>
+
+            <div className="mobile-drawer-footer">
+              <span className="mobile-drawer-subtext">
+                PIP.EXE · 432 HZ DREAM LAB · ONLINE
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   )
 }

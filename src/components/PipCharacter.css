@@ -161,24 +161,76 @@
   margin-left: 0.2rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .pip-character-wrapper {
-    max-width: 300px;
-  }
-  .pip-official-img,
-  .pip-svg-illustration {
-    max-width: 240px;
+    max-width: clamp(260px, 50vw, 360px);
   }
   .pip-badge-top-left {
     left: 0;
-    top: 5px;
   }
   .pip-badge-bottom-right {
     right: 0;
-    bottom: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pip-character-wrapper {
+    max-width: min(290px, 86vw);
+  }
+  .pip-dream-aura {
+    width: clamp(200px, 65vw, 280px);
+    height: clamp(200px, 65vw, 280px);
+    filter: blur(16px);
+  }
+  .pip-official-img,
+  .pip-svg-illustration {
+    max-width: clamp(180px, 55vw, 230px);
+    height: auto;
+  }
+  .pip-badge-top-left {
+    left: 0;
+    top: 0;
+    font-size: 0.5rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .pip-badge-bottom-right {
+    right: 0;
+    bottom: 5px;
+    font-size: 0.5rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .dream-engine-status-card {
+    padding: 0.4rem 0.75rem;
+    gap: 0.45rem;
+    max-width: 100%;
+  }
+  .engine-label {
+    font-size: 0.56rem;
   }
   .engine-subtext {
     display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .pip-character-wrapper {
+    max-width: 240px;
+  }
+  .pip-official-img,
+  .pip-svg-illustration {
+    max-width: 175px;
+  }
+  .pip-dream-aura {
+    width: 180px;
+    height: 180px;
+    filter: blur(12px);
+  }
+  .pip-float-badge {
+    font-size: 0.45rem;
+    padding: 0.2rem 0.4rem;
+  }
+  .engine-label {
+    font-size: 0.5rem;
   }
 }
 

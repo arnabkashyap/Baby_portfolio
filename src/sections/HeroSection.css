@@ -176,7 +176,7 @@
 @media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2.25rem;
     text-align: center;
   }
   .hero-content {
@@ -192,25 +192,28 @@
     margin: 0 auto;
     text-align: left;
     max-width: 480px;
+    width: 100%;
   }
   .hero-actions-row {
     justify-content: center;
   }
   .hero-easter-egg-trigger {
-    right: 10px;
-    top: -15px;
+    right: 0;
+    top: -20px;
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 580px) {
   .hero-section {
-    padding: 2.5rem 0 2rem;
+    padding: 2.25rem 0 2rem;
   }
   .hero-heading {
-    font-size: 2rem;
+    font-size: clamp(1.8rem, 6.5vw, 2.3rem);
+    line-height: 1.18;
   }
   .hero-intro {
     font-size: 1rem;
+    line-height: 1.5;
   }
   .hero-tagline-text {
     font-size: 1.05rem;
@@ -218,11 +221,51 @@
   .hero-actions-row {
     flex-direction: column;
     width: 100%;
+    gap: 0.75rem;
   }
   .btn-primary-dream,
   .btn-secondary-dream {
     width: 100%;
     justify-content: center;
+    text-align: center;
+    min-height: 46px;
+    box-sizing: border-box;
+  }
+  .hero-easter-egg-trigger {
+    top: -18px;
+    right: 0;
+    padding: 0.35rem 0.55rem;
+  }
+  .easter-egg-hint {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-section {
+    padding: 1.75rem 0 1.5rem;
+  }
+  .hero-heading {
+    font-size: 1.6rem;
+  }
+  .hero-status-tag {
+    font-size: 0.54rem;
+    padding: 0.3rem 0.55rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-tagline-box {
+    padding: 0.75rem 0.85rem;
+  }
+  .hero-tagline-text {
+    font-size: 0.95rem;
+  }
+  .btn-primary-dream {
+    font-size: 0.68rem;
+    padding: 0.75rem 1rem;
+  }
+  .btn-secondary-dream {
+    font-size: 0.65rem;
+    padding: 0.65rem 0.9rem;
   }
 }
 
