@@ -14,3 +14,10 @@
   gap: 2rem;
   padding-bottom: 2rem;
 }
+
+@media (max-width: 680px) {
+  .main-content {
+    gap: 1.25rem;
+    padding-bottom: 1.5rem;
+  }
+}

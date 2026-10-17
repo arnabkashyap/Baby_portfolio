@@ -30,42 +30,44 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenEasterEgg, onPla
 
   return (
     <section id="hero" className="hero-section" aria-label="Welcome to Pip's Dream Lab">
-      {/* Secret Easter Egg Interactive Trigger */}
-      <button
-        type="button"
-        className="hero-easter-egg-trigger"
-        onClick={handleActivateEasterEgg}
-        title="★ Secret Beacon: 432Hz · Click or Press Enter to inspect"
-        aria-label="Secret sleeping star humming softly at 432Hz. Click or press Enter to inspect Pip's hidden stardust stash."
-      >
-        <Star size={14} color="#F7E7A6" fill="#F7E7A6" className="easter-egg-star-icon" />
-        <span className="easter-egg-hint">★ 432Hz</span>
-
-        {/* Small Sparkle Burst on Activation */}
-        {isBursting && (
-          <div className="easter-egg-burst-overlay" aria-hidden="true">
-            {BURST_SPARKS.map((s) => (
-              <span
-                key={s.id}
-                className="burst-spark-node"
-                style={{
-                  top: '50%',
-                  left: '50%',
-                  ['--bx' as string]: s.bx,
-                  ['--by' as string]: s.by,
-                }}
-              />
-            ))}
-          </div>
-        )}
-      </button>
-
       <div className="hero-grid">
         {/* Left Column: Storybook & Retro Narrative */}
         <div className="hero-content">
-          <div className="hero-status-tag">
-            <span className="hero-status-pulse" aria-hidden="true" />
-            <span>JUNIOR DREAM ENGINEER · ONLINE</span>
+          <div className="hero-top-status-row">
+            <div className="hero-status-tag">
+              <span className="hero-status-pulse" aria-hidden="true" />
+              <span>JUNIOR DREAM ENGINEER · ONLINE</span>
+            </div>
+
+            {/* Secret Easter Egg Interactive Trigger */}
+            <button
+              type="button"
+              className="hero-easter-egg-trigger"
+              onClick={handleActivateEasterEgg}
+              title="★ Secret Beacon: 432Hz · Click or Press Enter to inspect"
+              aria-label="Secret sleeping star humming softly at 432Hz. Click or press Enter to inspect Pip's hidden stardust stash."
+            >
+              <Star size={13} color="#F7E7A6" fill="#F7E7A6" className="easter-egg-star-icon" />
+              <span className="easter-egg-hint">★ 432Hz</span>
+
+              {/* Small Sparkle Burst on Activation */}
+              {isBursting && (
+                <div className="easter-egg-burst-overlay" aria-hidden="true">
+                  {BURST_SPARKS.map((s) => (
+                    <span
+                      key={s.id}
+                      className="burst-spark-node"
+                      style={{
+                        top: '50%',
+                        left: '50%',
+                        ['--bx' as string]: s.bx,
+                        ['--by' as string]: s.by,
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </button>
           </div>
 
           <h1 className="hero-heading">
