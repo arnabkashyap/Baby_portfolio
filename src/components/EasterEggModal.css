@@ -1,0 +1,118 @@
+/* Easter Egg Modal & Confetti Effects */
+.easter-egg-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 8, 20, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeInModal 250ms ease forwards;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.easter-egg-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-accent);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 169, 197, 0.25);
+  padding: 2rem;
+  overflow: hidden;
+  animation: popInModal 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes popInModal {
+  from { transform: scale(0.9) translateY(10px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.easter-egg-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.easter-egg-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-pixel);
+  font-size: 0.62rem;
+  color: var(--color-moonlight-yellow);
+}
+
+.easter-egg-close-btn {
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  transition: all var(--transition-fast);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.easter-egg-close-btn:hover {
+  background: var(--bg-badge);
+  color: var(--color-stardust-pink);
+}
+
+.easter-egg-title {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  color: var(--color-moon-cream);
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.easter-egg-body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.easter-egg-signature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(23, 21, 43, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+}
+
+.easter-egg-pip-sig {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--color-stardust-pink);
+}
+
+/* Stardust Sparkle Particles */
+.stardust-particle {
+  position: absolute;
+  pointer-events: none;
+  animation: flutterSparkle 2.5s ease-out infinite;
+}
+
+@keyframes flutterSparkle {
+  0% { transform: translate(0, 0) scale(0.6) rotate(0deg); opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(1.2) rotate(180deg); opacity: 0; }
+}

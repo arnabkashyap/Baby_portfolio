@@ -1,0 +1,102 @@
+/* Shared Section Elements & Footer */
+.site-footer {
+  padding: 3.5rem 0 3rem;
+  margin-top: 4rem;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-header);
+  transition: background-color var(--transition-slow);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.footer-title {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: var(--color-stardust-pink);
+  letter-spacing: 0.05em;
+}
+
+.footer-tagline {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+.footer-sub-meta {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-subtle);
+  margin-top: 0.25rem;
+}
+
+.footer-links-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px dashed var(--border-subtle);
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--color-moonlight-yellow);
+}
+
+.footer-sep {
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+}
+
+.footer-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-pixel);
+  font-size: 0.58rem;
+  color: var(--color-moonlight-yellow);
+  background: var(--bg-badge);
+  border: 1px solid var(--border-accent);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-xs);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.footer-top-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--color-stardust-pink);
+  transform: translateY(-2px);
+}
+
+.footer-meta {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}

@@ -1,0 +1,224 @@
+@import './tokens.css';
+
+/* CSS Reset & Defaults */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 1.5rem);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  background-image: var(--gradient-body);
+  background-attachment: fixed;
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+/* Accessibility Focus States */
+:focus-visible {
+  outline: 2px solid var(--color-stardust-pink);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+/* Consistent Section Anchor Scrolling */
+section[id] {
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-dream-berry);
+  color: var(--color-moon-cream);
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* Layout Utilities */
+.page-container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Fonts */
+.font-pixel {
+  font-family: var(--font-pixel);
+  letter-spacing: -0.5px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Retro & Storybook Badges */
+.dream-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg-badge);
+  border: 1px solid var(--border-accent);
+  color: var(--text-highlight);
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Storybook / Retro Card Container */
+.dream-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.dream-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-card-hover);
+  box-shadow: var(--shadow-cozy);
+}
+
+/* Retro Window Frame */
+.retro-window-box {
+  background: var(--bg-retro-window);
+  border: 2px solid var(--border-subtle);
+  box-shadow: 
+    inset 1px 1px 0 rgba(255, 255, 255, 0.15),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.3),
+    var(--shadow-cozy);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.retro-window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.75rem;
+  background: rgba(37, 39, 71, 0.8);
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--text-accent);
+}
+
+.retro-window-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.retro-window-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.dot-red { background: #FF6B8B; }
+.dot-yellow { background: var(--color-moonlight-yellow); }
+.dot-green { background: #7BE495; }
+
+/* Interactive Buttons */
+.btn-primary-dream {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, var(--color-dream-berry), #BA4B77);
+  color: var(--color-moon-cream);
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-accent);
+  box-shadow: 0 4px 16px rgba(163, 64, 104, 0.45);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary-dream:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgba(163, 64, 104, 0.6);
+}
+
+.btn-secondary-dream {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-accent);
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px dashed var(--border-accent);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-secondary-dream:hover {
+  background: var(--bg-badge);
+  border-color: var(--color-stardust-pink);
+  color: var(--color-stardust-pink);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
