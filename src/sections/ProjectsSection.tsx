@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Sparkles, ArrowLeft, X, Lightbulb, Compass, Radio } from 'lucide-react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { Sparkles, ArrowLeft, X, Lightbulb, Compass, Radio, Disc } from 'lucide-react'
 import { type SoundEffectType } from '../utils/sound'
+import { registerModal, restoreFocus, getTopModal } from '../utils/modalManager'
 import './ProjectsSection.css'
+import '../components/DreamCollectible.css'
 
 interface ProjectItem {
   id: string
@@ -251,30 +253,50 @@ const PROJECTS: ProjectItem[] = [
 
 interface ProjectsSectionProps {
   onPlaySound?: (type: SoundEffectType) => void
+  isCassetteFound?: boolean
+  onCollectCassette?: () => void
 }
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onPlaySound }) => {
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
+  onPlaySound,
+  isCassetteFound = false,
+  onCollectCassette,
+}) => {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null)
   const detailDialogRef = useRef<HTMLDivElement>(null)
+  const triggerCardRef = useRef<HTMLElement | null>(null)
 
-  // Handle escape key to close project detail
+  const handleCloseDetail = useCallback(() => {
+    onPlaySound?.('close')
+    setSelectedProject(null)
+  }, [onPlaySound])
+
+  // Coordinate dialog with modalManager for stacking, Escape handling, and scroll lock
   useEffect(() => {
     if (!selectedProject) return
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onPlaySound?.('close')
-        setSelectedProject(null)
-      }
-    }
+    const trigger = triggerCardRef.current
+    const unregister = registerModal({
+      id: 'project-detail',
+      dismiss: handleCloseDetail,
+      getContainer: () => detailDialogRef.current,
+      triggerElement: trigger,
+    })
 
-    window.addEventListener('keydown', handleKeyDown)
     detailDialogRef.current?.focus()
 
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [selectedProject, onPlaySound])
+    return () => {
+      unregister()
+      triggerCardRef.current = null
+      // Restore focus to triggering card when closing, unless another modal took over
+      if (!getTopModal()) {
+        restoreFocus(trigger, null, '#dreams .project-card')
+      }
+    }
+  }, [selectedProject, handleCloseDetail])
 
   const handleCardClick = (project: ProjectItem) => {
+    triggerCardRef.current = document.activeElement as HTMLElement | null
     onPlaySound?.('open')
     setSelectedProject(project)
   }
@@ -282,14 +304,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onPlaySound })
   const handleCardKeyDown = (e: React.KeyboardEvent, project: ProjectItem) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
+      triggerCardRef.current = e.currentTarget as HTMLElement
       onPlaySound?.('open')
       setSelectedProject(project)
     }
-  }
-
-  const handleCloseDetail = () => {
-    onPlaySound?.('close')
-    setSelectedProject(null)
   }
 
   return (
@@ -403,6 +421,38 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onPlaySound })
               </span>
               <p className="detail-block-text">{selectedProject.designDetail}</p>
             </div>
+
+            {/* Collectible: The Brass Cassette Reel */}
+            {selectedProject.id === 'lullaby-lab' && (
+              <div className="detail-collectible-banner">
+                <div className="detail-collectible-info">
+                  <Disc size={15} className="collectible-banner-icon" />
+                  <div className="detail-collectible-text">
+                    <span className="detail-collectible-title">PROTOTYPE REEL #01 · DISCOVERED</span>
+                    <span className="detail-collectible-sub">
+                      Miniature brass cassette spool wound with dandelion fluff and 432 Hz lullaby tape.
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className={`collectible-dialog-btn ${isCassetteFound ? 'is-collected' : 'is-uncollected'}`}
+                  onClick={() => {
+                    onCollectCassette?.()
+                    onPlaySound?.('star')
+                  }}
+                  title={isCassetteFound ? 'The Brass Cassette Reel (Collected)' : 'Collect Brass Cassette Reel'}
+                  aria-label={
+                    isCassetteFound
+                      ? 'The Brass Cassette Reel: Collected into dream journal.'
+                      : 'Collect Brass Cassette Reel: Miniature lullaby synthesis spool. Click or press Enter to collect.'
+                  }
+                >
+                  <Sparkles size={12} />
+                  <span>{isCassetteFound ? 'REEL · COLLECTED' : '✦ COLLECT REEL'}</span>
+                </button>
+              </div>
+            )}
 
             {/* Close / Back to Dreams */}
             <div className="detail-bottom-row">

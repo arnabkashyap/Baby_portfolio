@@ -145,6 +145,23 @@
   word-break: break-word;
 }
 
+.fact-card-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.fact-card-footer-row .fact-retro-tag {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
 @media (max-width: 900px) and (min-width: 641px) {
   .facts-cards-grid {
     grid-template-columns: repeat(2, 1fr);

@@ -1,0 +1,205 @@
+/* Dream Hunt Collectible Elements Styling */
+
+.collectible-tag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.65rem;
+  min-height: 36px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  background: var(--bg-badge);
+  border: 1px dashed var(--border-accent);
+  color: var(--text-highlight);
+}
+
+.collectible-tag-btn:hover,
+.collectible-tag-btn:focus-visible {
+  border-color: var(--color-stardust-pink);
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(245, 169, 197, 0.35);
+}
+
+.collectible-tag-btn.is-collected {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-accent);
+  cursor: default;
+  opacity: 0.95;
+}
+
+.collectible-tag-btn.is-collected:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Blueprint Dialog Cassette Reel Banner */
+.detail-collectible-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card-subtle);
+  border: 1px dashed var(--border-accent);
+  border-radius: var(--radius-sm);
+  flex-wrap: wrap;
+  transition: border-color var(--transition-fast);
+}
+
+.detail-collectible-info {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.collectible-banner-icon {
+  color: var(--text-accent);
+  flex-shrink: 0;
+  animation: gentleReelSpin 8s linear infinite;
+}
+
+@keyframes gentleReelSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.detail-collectible-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.detail-collectible-title {
+  font-family: var(--font-pixel);
+  font-size: 0.58rem;
+  color: var(--text-accent);
+  letter-spacing: 0.04em;
+}
+
+.detail-collectible-sub {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.collectible-dialog-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.85rem;
+  min-height: 38px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--bg-badge);
+  border: 1px solid var(--border-accent);
+  color: var(--text-highlight);
+  white-space: nowrap;
+}
+
+.collectible-dialog-btn:hover,
+.collectible-dialog-btn:focus-visible {
+  border-color: var(--color-stardust-pink);
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(245, 169, 197, 0.35);
+}
+
+.collectible-dialog-btn.is-collected {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-accent);
+  cursor: default;
+}
+
+.collectible-dialog-btn.is-collected:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Chapter 02 Moonbeam Waypoint Discovery */
+.chapter-collectible-row {
+  margin-top: 0.5rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.chapter-waypoint-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-pixel);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  padding: 0.4rem 0.85rem;
+  min-height: 38px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--bg-badge);
+  border: 1px dashed var(--border-accent);
+  color: var(--text-accent);
+}
+
+.chapter-waypoint-btn:hover,
+.chapter-waypoint-btn:focus-visible {
+  border-color: var(--color-stardust-pink);
+  background: var(--bg-card-hover);
+  color: var(--text-highlight);
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(245, 169, 197, 0.35);
+}
+
+.chapter-waypoint-btn.is-collected {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-accent);
+  cursor: default;
+  opacity: 0.95;
+}
+
+.chapter-waypoint-btn.is-collected:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Hero Star Collected Styling Modifier */
+.hero-easter-egg-trigger.star-collected {
+  border-style: solid;
+  border-color: var(--color-moonlight-yellow);
+  box-shadow: 0 0 10px rgba(247, 231, 166, 0.25);
+}
+
+@media (max-width: 480px) {
+  .detail-collectible-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .collectible-dialog-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collectible-banner-icon {
+    animation: none !important;
+  }
+  .collectible-tag-btn,
+  .collectible-dialog-btn,
+  .chapter-waypoint-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}

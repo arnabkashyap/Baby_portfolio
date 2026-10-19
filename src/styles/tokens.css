@@ -79,7 +79,7 @@
   --text-primary: #17152B;
   --text-muted: #3D3958;
   --text-subtle: #6D6882;
-  --text-accent: #8E3558;
+  --text-accent: #7D5500;
   --text-highlight: #A34068;
 
   --border-subtle: rgba(37, 39, 71, 0.15);
@@ -99,7 +99,7 @@
     radial-gradient(ellipse 70% 50% at 50% 100%, rgba(245, 169, 197, 0.2), transparent 80%);
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
   :root,
   [data-theme="night"],
   [data-theme="day"] {

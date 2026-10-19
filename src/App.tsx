@@ -7,7 +7,11 @@ import { StorySection } from './sections/StorySection'
 import { FooterSection } from './sections/FooterSection'
 import { EasterEggModal } from './components/EasterEggModal'
 import { SparkleTrail } from './components/SparkleTrail'
+import { DreamJournal } from './components/DreamJournal'
+import { SecretEndingModal } from './components/SecretEndingModal'
+import { UnlockToast } from './components/UnlockToast'
 import { playDreamSound, type SoundEffectType } from './utils/sound'
+import { useDreamHunt } from './utils/useDreamHunt'
 import './App.css'
 
 export const App: React.FC = () => {
@@ -22,6 +26,23 @@ export const App: React.FC = () => {
   // Audio state defaults strictly to false (muted) on initial visit
   const [soundEnabled, setSoundEnabled] = useState(false)
   const [isEasterEggOpen, setIsEasterEggOpen] = useState(false)
+
+  // Foundational Dream Hunt state & persistence hook
+  const {
+    isItemFound,
+    collectItem,
+    foundCount,
+    totalCount,
+    hasCompleted,
+    isJournalOpen,
+    openJournal,
+    closeJournal,
+    isEndingOpen,
+    openEnding,
+    closeEnding,
+    justUnlocked,
+    dismissUnlockToast,
+  } = useDreamHunt()
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -78,16 +99,30 @@ export const App: React.FC = () => {
         <HeroSection
           onOpenEasterEgg={handleOpenEasterEgg}
           onPlaySound={handlePlaySound}
+          isStarFound={isItemFound('fallen-star')}
+          onCollectStar={() => collectItem('fallen-star')}
         />
 
         {/* About Section: Small skull. Big dreams */}
-        <AboutSection />
+        <AboutSection
+          isJarFound={isItemFound('stardust-jar')}
+          onCollectJar={() => collectItem('stardust-jar')}
+          onPlaySound={handlePlaySound}
+        />
 
         {/* Projects Section: Little dreams. Big possibilities. & Interactive Blueprints */}
-        <ProjectsSection onPlaySound={handlePlaySound} />
+        <ProjectsSection
+          onPlaySound={handlePlaySound}
+          isCassetteFound={isItemFound('brass-cassette')}
+          onCollectCassette={() => collectItem('brass-cassette')}
+        />
 
         {/* Story Section: How Pip found the moonlight & Winding Celestial Route */}
-        <StorySection />
+        <StorySection
+          isWaypointFound={isItemFound('moonbeam-waypoint')}
+          onCollectWaypoint={() => collectItem('moonbeam-waypoint')}
+          onPlaySound={handlePlaySound}
+        />
       </main>
 
       {/* Footer Section */}
@@ -95,6 +130,35 @@ export const App: React.FC = () => {
 
       {/* Secret Stardust Easter Egg Modal */}
       <EasterEggModal isOpen={isEasterEggOpen} onClose={handleCloseEasterEgg} />
+
+      {/* Dream Journal UI: Floating Progress Button & Modal Field Log */}
+      <DreamJournal
+        isOpen={isJournalOpen}
+        onOpen={openJournal}
+        onClose={closeJournal}
+        foundCount={foundCount}
+        totalCount={totalCount}
+        hasCompleted={hasCompleted}
+        isItemFound={isItemFound}
+        onPlaySound={handlePlaySound}
+        onOpenEnding={openEnding}
+      />
+
+      {/* Secret Ending In-Session Unlock Notification */}
+      <UnlockToast
+        isVisible={justUnlocked}
+        onOpenEnding={openEnding}
+        onDismiss={dismissUnlockToast}
+        onPlaySound={handlePlaySound}
+      />
+
+      {/* Secret Dream Ending Modal Dialog */}
+      <SecretEndingModal
+        isOpen={isEndingOpen}
+        onClose={closeEnding}
+        onOpenJournal={openJournal}
+        onPlaySound={handlePlaySound}
+      />
     </div>
   )
 }

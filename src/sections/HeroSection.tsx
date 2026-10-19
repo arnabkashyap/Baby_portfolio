@@ -3,10 +3,13 @@ import { PipCharacter } from '../components/PipCharacter'
 import { ArrowRight, ArrowDown, Star } from 'lucide-react'
 import { type SoundEffectType } from '../utils/sound'
 import './HeroSection.css'
+import '../components/DreamCollectible.css'
 
 interface HeroSectionProps {
   onOpenEasterEgg: () => void
   onPlaySound?: (type: SoundEffectType) => void
+  isStarFound?: boolean
+  onCollectStar?: () => void
 }
 
 const BURST_SPARKS = [
@@ -18,11 +21,17 @@ const BURST_SPARKS = [
   { id: 6, bx: '0px', by: '28px' },
 ]
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenEasterEgg, onPlaySound }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  onOpenEasterEgg,
+  onPlaySound,
+  isStarFound = false,
+  onCollectStar,
+}) => {
   const [isBursting, setIsBursting] = useState(false)
 
   const handleActivateEasterEgg = () => {
     setIsBursting(true)
+    onCollectStar?.()
     onPlaySound?.('star')
     onOpenEasterEgg()
     setTimeout(() => setIsBursting(false), 600)
@@ -42,13 +51,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenEasterEgg, onPla
             {/* Secret Easter Egg Interactive Trigger */}
             <button
               type="button"
-              className="hero-easter-egg-trigger"
+              className={`hero-easter-egg-trigger ${isStarFound ? 'star-collected' : ''}`}
               onClick={handleActivateEasterEgg}
-              title="★ Secret Beacon: 432Hz · Click or Press Enter to inspect"
-              aria-label="Secret sleeping star humming softly at 432Hz. Click or press Enter to inspect Pip's hidden stardust stash."
+              title={
+                isStarFound
+                  ? "★ The Fallen Star (Collected) · Click to inspect Pip's secret message"
+                  : '★ Secret Beacon: 432Hz · Click or Press Enter to inspect'
+              }
+              aria-label={
+                isStarFound
+                  ? "The Fallen Star: Collected into dream journal. Click or press Enter to inspect Pip's hidden stardust stash."
+                  : "Secret sleeping star humming softly at 432Hz. Click or press Enter to inspect Pip's hidden stardust stash."
+              }
             >
               <Star size={13} color="#F7E7A6" fill="#F7E7A6" className="easter-egg-star-icon" />
-              <span className="easter-egg-hint">★ 432Hz</span>
+              <span className="easter-egg-hint">{isStarFound ? '★ 432Hz ✦' : '★ 432Hz'}</span>
 
               {/* Small Sparkle Burst on Activation */}
               {isBursting && (

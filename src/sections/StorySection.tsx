@@ -1,6 +1,8 @@
 import React from 'react'
-import { Sparkles, Feather, Moon, BookOpen, Star } from 'lucide-react'
+import { Sparkles, Feather, Moon, BookOpen, Star, Compass } from 'lucide-react'
+import { type SoundEffectType } from '../utils/sound'
 import './StorySection.css'
+import '../components/DreamCollectible.css'
 
 interface StoryChapter {
   id: string
@@ -53,7 +55,17 @@ const CHAPTERS: StoryChapter[] = [
   },
 ]
 
-export const StorySection: React.FC = () => {
+interface StorySectionProps {
+  isWaypointFound?: boolean
+  onCollectWaypoint?: () => void
+  onPlaySound?: (type: SoundEffectType) => void
+}
+
+export const StorySection: React.FC<StorySectionProps> = ({
+  isWaypointFound = false,
+  onCollectWaypoint,
+  onPlaySound,
+}) => {
   return (
     <section id="story" className="story-section" aria-label="How Pip found the moonlight">
       <div className="story-header-group">
@@ -168,6 +180,29 @@ export const StorySection: React.FC = () => {
                     {chapter.mood}
                   </span>
                 </div>
+
+                {/* Collectible: The Moonbeam Waypoint */}
+                {chapter.id === 'chapter-02' && (
+                  <div className="chapter-collectible-row">
+                    <button
+                      type="button"
+                      className={`chapter-waypoint-btn ${isWaypointFound ? 'is-collected' : 'is-uncollected'}`}
+                      onClick={() => {
+                        onCollectWaypoint?.()
+                        onPlaySound?.('star')
+                      }}
+                      title={isWaypointFound ? 'The Moonbeam Waypoint (Collected)' : 'Tune Moonbeam Waypoint'}
+                      aria-label={
+                        isWaypointFound
+                          ? 'The Moonbeam Waypoint: Collected into dream journal.'
+                          : 'Tune Moonbeam Waypoint: Celestial dream trail navigation beacon. Click or press Enter to collect.'
+                      }
+                    >
+                      <Compass size={12} />
+                      <span>{isWaypointFound ? 'WAYPOINT BEACON · COLLECTED' : '✦ TUNE MOONBEAM WAYPOINT'}</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </article>
           ))}

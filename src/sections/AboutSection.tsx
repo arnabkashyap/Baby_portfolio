@@ -1,8 +1,20 @@
 import React from 'react'
 import { Compass, Moon, Sparkles, Clock, Music, Sparkle } from 'lucide-react'
+import { type SoundEffectType } from '../utils/sound'
 import './AboutSection.css'
+import '../components/DreamCollectible.css'
 
-export const AboutSection: React.FC = () => {
+interface AboutSectionProps {
+  isJarFound?: boolean
+  onCollectJar?: () => void
+  onPlaySound?: (type: SoundEffectType) => void
+}
+
+export const AboutSection: React.FC<AboutSectionProps> = ({
+  isJarFound = false,
+  onCollectJar,
+  onPlaySound,
+}) => {
   return (
     <section id="about" className="about-section" aria-label="About Pip">
       <div className="about-header-group">
@@ -78,7 +90,26 @@ export const AboutSection: React.FC = () => {
             Saves forgotten afternoon daydreams in sealed glass stardust jars, polishing
             their edges until they are ready to become full nighttime adventures.
           </p>
-          <span className="fact-retro-tag">STORAGE: 1,024 FLUFFY JARS</span>
+          <div className="fact-card-footer-row">
+            <span className="fact-retro-tag">STORAGE: 1,024 FLUFFY JARS</span>
+            <button
+              type="button"
+              className={`collectible-tag-btn ${isJarFound ? 'is-collected' : 'is-uncollected'}`}
+              onClick={() => {
+                onCollectJar?.()
+                onPlaySound?.('star')
+              }}
+              title={isJarFound ? 'The Stardust Jar (Collected)' : 'Inspect Stardust Jar #042'}
+              aria-label={
+                isJarFound
+                  ? 'The Stardust Jar: Collected into dream journal.'
+                  : "Inspect Stardust Jar: Pip's glowing stardust jar. Click or press Enter to collect."
+              }
+            >
+              <Sparkles size={11} />
+              <span>{isJarFound ? 'JAR #042 · COLLECTED' : '✦ INSPECT JAR #042'}</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>

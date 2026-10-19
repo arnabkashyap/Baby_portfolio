@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Sparkles, X, Heart, Moon } from 'lucide-react'
+import { registerModal, restoreFocus, getTopModal } from '../utils/modalManager'
 import './EasterEggModal.css'
 
 interface EasterEggModalProps {
@@ -18,20 +19,31 @@ const PARTICLES = [
 
 export const EasterEggModal: React.FC<EasterEggModalProps> = ({ isOpen, onClose }) => {
   const closeBtnRef = useRef<HTMLButtonElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     if (!isOpen) return
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose()
-      }
+    if (!triggerRef.current && typeof document !== 'undefined') {
+      triggerRef.current = document.activeElement as HTMLElement | null
     }
 
-    window.addEventListener('keydown', handleKeyDown)
+    const unregister = registerModal({
+      id: 'easter-egg',
+      dismiss: onClose,
+      getContainer: () => cardRef.current,
+      triggerElement: triggerRef.current,
+    })
+
     closeBtnRef.current?.focus()
 
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      unregister()
+      const trigger = triggerRef.current
+      triggerRef.current = null
+      restoreFocus(trigger, getTopModal(), '.hero-easter-egg-trigger')
+    }
   }, [isOpen, onClose])
 
   if (!isOpen) return null
@@ -45,8 +57,10 @@ export const EasterEggModal: React.FC<EasterEggModalProps> = ({ isOpen, onClose 
       aria-labelledby="easter-egg-heading"
     >
       <div
+        ref={cardRef}
         className="easter-egg-card"
         onClick={(e) => e.stopPropagation()}
+        tabIndex={-1}
       >
         {/* Decorative Floating Sparkle Particles */}
         {PARTICLES.map((p) => (

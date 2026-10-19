@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Sparkles, Moon, Sun, Volume2, VolumeX, Menu, X, ArrowRight } from 'lucide-react'
+import { registerModal, restoreFocus } from '../utils/modalManager'
 import './Header.css'
 
 interface HeaderProps {
@@ -20,37 +21,23 @@ export const Header: React.FC<HeaderProps> = ({
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
 
-  // Close menu on Escape key press
+  // Coordinate mobile drawer with modalManager for Escape handling, scroll lock, and focus restoration
   useEffect(() => {
     if (!isMenuOpen) return
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsMenuOpen(false)
-        menuButtonRef.current?.focus()
-      }
-    }
+    const trigger = menuButtonRef.current
+    const unregister = registerModal({
+      id: 'mobile-menu',
+      dismiss: () => setIsMenuOpen(false),
+      getContainer: () => menuRef.current,
+      triggerElement: trigger,
+    })
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isMenuOpen])
+    firstLinkRef.current?.focus()
 
-  // Focus first link when menu opens
-  useEffect(() => {
-    if (isMenuOpen) {
-      firstLinkRef.current?.focus()
-    }
-  }, [isMenuOpen])
-
-  // Prevent background scrolling when mobile menu is open on small screens
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
     return () => {
-      document.body.style.overflow = ''
+      unregister()
+      restoreFocus(trigger, null, '.mobile-menu-btn')
     }
   }, [isMenuOpen])
 
